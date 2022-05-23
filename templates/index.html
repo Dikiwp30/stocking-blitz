@@ -1,0 +1,159 @@
+<html>
+  <head>
+    <title>Stocking Blitz Apps</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/pricing/">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+  <body> 
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow" >
+      <h3 class="my-0 mr-md-auto font-weight-normal">Stocking Blitz</h3>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Github</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">enabled</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">Prediksi Persediaan Bahan Baku</h1>
+      <p class="lead">Aplikasi ini mampu memprediksi produsen dalam mempertahankan atau menambah stock bahan baku dengan parameter jumlah, bahan, tanggal, permintaan</p>
+    </div>
+
+    <div class="container">
+      <div class="card-deck mb-3 text-center">
+
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Silahkan Masukan Parameter</h4>
+          </div>
+          <form action="{{ url_for('predict') }}" method="post">
+            <div class="card-body">
+                <div class="container">
+                  <div class="row">
+
+                    <div class="col" style="padding: 10px;">
+                      <input class="form-control"  type="number" name = "day" min="0" placeholder="Input day. ex. 2" required>
+                    </div>
+                    <div class="w-100"></div>
+
+                    <div class="col" style="padding: 10px;">
+                      <select class="custom-select" name ="Tanggal" id="Tanggal" required>
+                        <option selected>Pilih Tanggal</option>
+                        <option value=0>1-10</option>
+                        <option value=1>11-20</option>
+                        <option value=2>21-31</option>
+                      </select>
+                    </div>
+                    <div class="col" style="padding: 10px;">
+                      <select class="custom-select" name ="Jumlah" id="Jumlah" required>
+                        <option selected>Pilih Jumlah</option>
+                        <option value=0>Diantara 10 dan 20 Meter</option>
+                        <option value=1>Kurang dari 10 Meter</option>
+                        <option value=2>Di atas 20 Meter</option>
+                      </select>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col" style="padding: 10px;">
+                      <select class="custom-select" name ="Bahan" id="Bahan" required>
+                        <option selected>Pilih Bahan</option>
+                        <option value=0>Aksesoris Tas</option>
+                        <option value=1>Benang Nilon</option>
+                        <option value=2>Imitasi Kulit</option>
+                      </select>
+                    </div>
+                    <div class="col" style="padding: 10px;">
+                      <select class="custom-select" name ="Permintaan" id="Permintaan" required>
+                        <option selected>Pilih Permintaan</option>
+                        <option value=0>Turun</option>
+                        <option value=1>Naik</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+        
+              <button type="submit" class="btn btn-lg btn-block btn-primary">Prediksi</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="card-deck mb-3 text-center">
+       
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Hasil Prediksi</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title"><small class="text-muted"></small></h1>
+            {% if kelas == "Mempertahankan Stock" %}
+              <span class="badge badge-success"><h1>{{Penjual}}</h1></span>
+            {% endif %}
+            {% if kelas == "Menambah Stock" %}
+              <span class="badge badge-danger"><h1>{{Penjual}}</h1></span>
+            {% endif %}
+          </div>
+        </div>
+      
+      </div>
+
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+            <img class="mb-2" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+            <small class="d-block mb-3 text-muted">&copy; 2017-2018</small>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+  </body>
+</html>
